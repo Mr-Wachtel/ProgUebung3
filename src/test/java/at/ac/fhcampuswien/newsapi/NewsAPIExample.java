@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NewsAPIExample {
 
-    public static final String APIKEY = "myKey";    //TODO add your api key
+    public static final String APIKEY = "0db5ce9d6c1743fdb41549eb1f1f9840";    //TODO add your api key
 
     public static void main(String[] args){
 
@@ -22,11 +22,26 @@ public class NewsAPIExample {
                 .setSourceCategory(Category.health) // example of how to use enums
                 .createNewsApi();
 
+        NewsResponse newsResponse;
+
+        try {
+            newsResponse = newsApi.getNews();
+            List<Article> articles = newsResponse.getArticles();
+            articles.stream().forEach(article -> System.out.println(article.toString()));
+        } catch (NewsApiException e) {
+            System.out.println("NewsResponse cannot be empty.");
+            e.printStackTrace();
+        } catch (NullPointerException n){
+            System.out.println("NewsResponse cannot be NULL");
+            n.printStackTrace();
+        }
+        /*
             NewsResponse newsResponse = newsApi.getNews();
             if(newsResponse != null){
                 List<Article> articles = newsResponse.getArticles();
                 articles.stream().forEach(article -> System.out.println(article.toString()));
             }
+         */
 
         newsApi = new NewsApiBuilder()
                 .setApiKey(APIKEY)
@@ -36,12 +51,24 @@ public class NewsAPIExample {
                 .setExcludeDomains("Lifehacker.com")
                 .createNewsApi();
 
+        try {
             newsResponse = newsApi.getNews();
-
+            List<Article> articles = newsResponse.getArticles();
+            articles.stream().forEach(article -> System.out.println(article.toString()));
+        } catch (NewsApiException e) {
+            System.out.println("NewsResponse cannot be empty.");
+            e.printStackTrace();
+        } catch (NullPointerException n){
+            System.out.println("NewsResponse cannot be NULL");
+            n.printStackTrace();
+        }
+        /*
+            newsResponse = newsApi.getNews();
         if(newsResponse != null){
             List<Article> articles = newsResponse.getArticles();
             articles.stream().forEach(article -> System.out.println(article.toString()));
         }
+         */
 
     }
 }
